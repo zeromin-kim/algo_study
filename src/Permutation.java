@@ -1,53 +1,46 @@
-package kr.co.miracom;
-
 public class Permutation {
+    static void main(String...args){
 
-    public static void main(String...args){
-        Integer[] arr = new Integer[]{0,1,2};
-        printAllRecursive(3, arr);
     }
-    public static <T> void printAllRecursive( int n, T[] elements) {
-        if(n == 1) {
-            printArray(elements);
-        } else {
-            for(int i = 0; i < n-1; i++) {
-                printAllRecursive(n - 1, elements);
-                if(n % 2 == 0) {
-                    swap(elements, i, n-1);
-                } else {
-                    swap(elements, 0, n-1);
-                }
-            }
-            printAllRecursive(n - 1, elements);
+
+    static void permutaion(int[] arr, int depth, int n, int r){
+        if(depth == r){
+            print(arr, r);
+            return;
+        }
+        for(int i =depth; i<n; i++){
+            swap(arr, depth, i);
+            permutaion(arr, depth+1, n, r);
+            swap(arr, depth, i);
         }
     }
 
-    private static<T> void swap(T[] input, int a, int b) {
-        T tmp = input[a];
-        input[a] = input[b];
-        input[b] = tmp;
+    static void swap(int[] arr, int depth, int i) {
+        int temp = arr[depth];
+        arr[depth] = arr[i];
+        arr[i] = temp;
     }
-    private static<T> void printArray(T[] input) {
-        System.out.print('\n');
-        for(int i = 0; i < input.length; i++) {
-            System.out.print(input[i]);
+
+
+    static void perm(int [] arr, int[] output, boolean[] visited, int depth, int n, int r){
+        if(depth == r){
+            print(output, r);
+            return;
         }
-    }
-
-    private static<T> void iterativeway(int n, T[] elements){
-        int[] indexes= new int[n];
-
-        int i =0;
-        while(i<n){
-            if(indexes[i] <i){
-                swap(elements, i%2==0?0:indexes[i], i);
-                printArray(elements);
-                indexes[i]++;
-                i=0;
-            }else{
-                indexes[i]=0;
-                i++;
+        for(int  i= 0; i<n; i++){
+            if(!visited[i]){
+                visited[i]= true;
+                output[depth] = arr[i];
+                perm(arr, output, visited, depth+1, n, r);
+                output[depth] = 0;
+                visited[i] = false;
             }
         }
+    }
+    // 배열 출력
+    static void print(int[] arr, int r) {
+        for(int i=0; i<r; i++)
+            System.out.print(arr[i] + " ");
+        System.out.println();
     }
 }
