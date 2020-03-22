@@ -43,4 +43,19 @@ public class Permutation {
             System.out.print(arr[i] + " ");
         System.out.println();
     }
+
+
+    static void powerSet(int[] arr, boolean[] visited, int n, int idx){
+        if(idx == n){
+            print(arr, visited,n);
+            return;
+        }
+
+        visited[idx] = false;
+        powerSet(arr, visited, n, idx+1);
+
+        visited[idx] = true;
+        powerSet(arr, visited, n, idx+1);
+
+    }
 }
